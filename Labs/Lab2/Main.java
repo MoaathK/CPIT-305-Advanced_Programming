@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 /*
     * Name: Moath Alahmadi
-    * ID: 2135524
     * Course: CPIT-305
  */
 public class Main {

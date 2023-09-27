@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /*
  * Name: Moath Khalid Alahmadi
- * ID: 2135524
+ * 
  * Course: CPIT-305
  *
  */
