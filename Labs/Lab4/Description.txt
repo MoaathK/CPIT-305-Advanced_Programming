@@ -1,0 +1,5 @@
+what the program should do:
+.
+in this lab I continued with some modification on the Lab3.
+the modification was insted of printing the file attributes right away,
+ I created an object of a Metadata class and then stored in Arraylist
