@@ -1,13 +1,14 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class Metadata {
+public class Metadata implements Serializable {
     private String name ;
     private boolean canRead;
     private boolean canWrite;
     private boolean canExecute;
     private Long lastModified;
 
-    public Metadata(){
+    public Metadata(boolean readable){
 
     }
     public Metadata (String name, boolean canRead, boolean canWrite, boolean canExecute,Long lastModified){

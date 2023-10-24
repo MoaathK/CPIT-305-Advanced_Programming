@@ -1,12 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
+
 public class Main {
-    public static void isDirectory(File file, ArrayList fileList){
+    public static void isDirectory(File file,ArrayList<Metadata> arrayList){
 
         File [] s = file.listFiles();
 
@@ -15,40 +13,49 @@ public class Main {
 
             if (s[i].isDirectory()){
 
-                System.out.println(s[i].getName());
-                fileList.add( new Metadata(s[i].getName(),s[i].canRead(),s[i].canWrite(),s[i].canExecute(),s[i].lastModified()));
+                Metadata m = new Metadata(s[i].getName(),s[i].canRead(),s[i].canWrite(),s[i].canExecute(),s[i].lastModified());
+                arrayList.add(m);
 
-                isDirectory(s[i],fileList);
+                isDirectory(s[i],arrayList);
             }
             else {
-                isFile(s[i],fileList);
+                isFile(s[i],arrayList);
             }
         }
     }
-    public static void isFile(File file, ArrayList fileList)  {
-        fileList.add( new Metadata(file.getName(),file.canRead(),file.canWrite(),file.canExecute(),file.lastModified()));
+    public static void isFile(File file,ArrayList<Metadata> arrayList)  {
+        Metadata m = new Metadata(file.getName(),file.canRead(),file.canWrite(),file.canExecute(),file.lastModified());
+        arrayList.add(m);
+
+
+
 
 
     }
-    public static void main(String[] args) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter("Test.txt");
+    public static void main(String[] args) throws IOException {
+
+
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the File/Directory full path: ");
         File file = new File(input.nextLine());
-        ArrayList<Metadata> fileList = new ArrayList<>();
+        FileOutputStream fos   = new FileOutputStream("Test.txt");
+        ObjectOutputStream out = new ObjectOutputStream(fos);
+
+        ArrayList<Metadata> arrayList = new ArrayList<>();
         if (file.isDirectory()){
-            isDirectory(file,fileList);
+            isDirectory(file,arrayList);
         }
         else
-            isFile(file,fileList);
+            isFile(file,arrayList);
 
-        for (Metadata value : fileList) {
-            pw.println(value.toString());
+        for (int i = 0 ; i < arrayList.size(); i++){
+            out.writeObject(arrayList.get(i));
         }
 
-        pw.close();
-        pw.flush();
+
+
 
 
     }
+
 }
