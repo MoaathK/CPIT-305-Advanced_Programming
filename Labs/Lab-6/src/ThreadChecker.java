@@ -11,11 +11,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ThreadChecker implements Runnable{
     private File directory;
     private ReentrantLock reentrantLock;
-    File
+    private File file;
 
-    public ThreadChecker(File directory, ReentrantLock reentrantLock){
+    public ThreadChecker(File directory, ReentrantLock reentrantLock,File file){
         this.directory = directory;
-
+        this.file = file;
         this.reentrantLock = reentrantLock;
 
     }
@@ -32,12 +32,12 @@ public class ThreadChecker implements Runnable{
 
 
                 if (files[i].isDirectory()){
-                    Thread subDirectory = new Thread(new ThreadChecker(files[i],reentrantLock));
+                    Thread subDirectory = new Thread(new ThreadChecker(files[i],reentrantLock,file));
                     subDirectory.start();
                     try {
                         subDirectory.join();
                     }catch (InterruptedException e){
-
+                        System.out.println("In the directory we got the error");
                     }
                     printData(files[i]);
                 }
@@ -49,16 +49,22 @@ public class ThreadChecker implements Runnable{
         }
     }
 
-    public void printData(File file) {
-        reentrantLock.lock();
-        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("Output.txt"))){
-            os.writeObject(file);
+    public void printData(File file1) {
 
+        reentrantLock.lock();
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,false))){
+            os.writeObject(file1);
+            os.flush();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+        finally {
+
+            reentrantLock.unlock();
+        }
+        System.out.println("Final check");
 /*
         try (FileChannel channel1 = FileChannel.open(path, StandardOpenOption.APPEND)){
             FileLock lock = channel1.tryLock();

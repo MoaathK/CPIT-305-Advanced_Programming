@@ -12,15 +12,15 @@ public class Main{
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        FileOutputStream pw = new FileOutputStream("Output.txt");
+        //FileOutputStream pw = new FileOutputStream("Output.txt");
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the File/Directory full path: ");
         File file = new File(input.nextLine());
         File output = new File("Output.txt");
         ReentrantLock reentrantLock = new ReentrantLock();
-        RandomAccessFile randomAccessFile = new RandomAccessFile(output, "rw");
+        //RandomAccessFile randomAccessFile = new RandomAccessFile(output, "rw");
         if (file.isDirectory()){
-            Thread root = new Thread(new ThreadChecker(file,reentrantLock));
+            Thread root = new Thread(new ThreadChecker(file,reentrantLock,output));
             root.start();
 
         }
