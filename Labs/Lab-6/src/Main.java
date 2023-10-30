@@ -16,7 +16,7 @@ public class Main{
         Scanner input = new Scanner(System.in);
         System.out.print("Enter the File/Directory full path: ");
         File file = new File(input.nextLine());
-        File output = new File("Output.txt");
+        File output = new File("Output.dat");
         ReentrantLock reentrantLock = new ReentrantLock();
         //RandomAccessFile randomAccessFile = new RandomAccessFile(output, "rw");
         if (file.isDirectory()) {
