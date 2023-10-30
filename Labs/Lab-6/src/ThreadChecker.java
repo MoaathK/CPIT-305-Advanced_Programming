@@ -25,7 +25,7 @@ public class ThreadChecker implements Runnable{
 
 
 
-        System.out.println("Thread: "+Thread.currentThread().toString());
+        //System.out.println("Thread: "+Thread.currentThread().toString());
         File[] files = directory.listFiles();
         if (files != null){
             for (int i = 0; i < files.length ; i++){
@@ -39,11 +39,24 @@ public class ThreadChecker implements Runnable{
                     }catch (InterruptedException e){
                         System.out.println("In the directory we got the error");
                     }
-                    printData(files[i]);
+                    //printData(files[i]);
+                    reentrantLock.lock();
+                    try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,false))){
+                        os.writeObject(files[i]);
+                        os.flush();
+                    } catch (FileNotFoundException e) {
+                        System.out.println(e.getMessage());;
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    finally {
+
+                        reentrantLock.unlock();
+                    }
                 }
-                else {
+                /*else {
                     printData(files[i]);
-                }
+                }*/
 
             }
         }
@@ -64,7 +77,7 @@ public class ThreadChecker implements Runnable{
 
             reentrantLock.unlock();
         }
-        System.out.println("Final check");
+
 /*
         try (FileChannel channel1 = FileChannel.open(path, StandardOpenOption.APPEND)){
             FileLock lock = channel1.tryLock();

@@ -19,12 +19,25 @@ public class Main{
         File output = new File("Output.txt");
         ReentrantLock reentrantLock = new ReentrantLock();
         //RandomAccessFile randomAccessFile = new RandomAccessFile(output, "rw");
-        if (file.isDirectory()){
-            Thread root = new Thread(new ThreadChecker(file,reentrantLock,output));
+        if (file.isDirectory()) {
+            Thread root = new Thread(new ThreadChecker(file, reentrantLock, output));
             root.start();
 
         }
-        //File file1 = new File("data.dat");
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("Output.txt"))) {
+            File[] ob = (File[]) in.readObject();
+            //System.out.println(ob);
+            for (File e : ob) {
+                System.out.println(e);
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+            //File file1 = new File("data.dat");
 
         /*try {
             // Create a RandomAccessFile and a FileChannel for the file
@@ -52,5 +65,4 @@ public class Main{
 
 
 
-    }
-}
+    }}
