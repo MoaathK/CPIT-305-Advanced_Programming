@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-public class ThreadChecker implements Runnable{
+public class ThreadChecker implements Runnable, Serializable{
     private File directory;
     private ReentrantLock reentrantLock;
     private File file;
@@ -25,7 +25,7 @@ public class ThreadChecker implements Runnable{
 
 
 
-        //System.out.println("Thread: "+Thread.currentThread().toString());
+
         File[] files = directory.listFiles();
         if (files != null){
             for (int i = 0; i < files.length ; i++){
@@ -40,65 +40,31 @@ public class ThreadChecker implements Runnable{
                     }catch (InterruptedException e){
                         System.out.println("In the directory we got the error");
                     }
-                    //printData(files[i]);
-                    reentrantLock.lock();
-                    try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,true))){
-                        os.writeObject(th);
-                        os.flush();
-                    } catch (FileNotFoundException e) {
-                        System.out.println(e.getMessage());;
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    finally {
+                    printData(this);
 
-                        reentrantLock.unlock();
-                    }
                 }
-                /*else {
-                    printData(files[i]);
-                }*/
+
 
             }
         }
     }
 
-    public void printData(File file1) {
+    public void printData(ThreadChecker th)  {
 
-        /*reentrantLock.lock();
-        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,true))){
-            os.writeObject(file1);
-            os.flush();
+        reentrantLock.lock();
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,true)))
+        {
+            os.writeObject(th);
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());;
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("File not found: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error writing data: " + e.getMessage());
         }
         finally {
 
             reentrantLock.unlock();
-        }*/
+        }
 
-/*
-        try (FileChannel channel1 = FileChannel.open(path, StandardOpenOption.APPEND)){
-            FileLock lock = channel1.tryLock();
-            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path.toFile()));
-            outputStream.writeObject(file);
-            lock.release();
-            channel1.close();
-            outputStream.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
-        /*System.out.println("File Name: "+ file.getName());
-        System.out.println("File Can write: "+file.canWrite());
-        System.out.println("File can read: "+file.canRead());
-        System.out.println("File can execute: "+ file.canExecute());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date lastModified = new Date(file.lastModified());
-        System.out.println("Last Modified: " + dateFormat.format(lastModified));
-        System.out.println("--------------------------");*/
 
     }
 }
