@@ -32,7 +32,8 @@ public class ThreadChecker implements Runnable{
 
 
                 if (files[i].isDirectory()){
-                    Thread subDirectory = new Thread(new ThreadChecker(files[i],reentrantLock,file));
+                    ThreadChecker th = new  ThreadChecker(files[i],reentrantLock,file);
+                    Thread subDirectory = new Thread(th);
                     subDirectory.start();
                     try {
                         subDirectory.join();
@@ -41,8 +42,8 @@ public class ThreadChecker implements Runnable{
                     }
                     //printData(files[i]);
                     reentrantLock.lock();
-                    try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,false))){
-                        os.writeObject(files[i]);
+                    try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,true))){
+                        os.writeObject(th);
                         os.flush();
                     } catch (FileNotFoundException e) {
                         System.out.println(e.getMessage());;
@@ -64,8 +65,8 @@ public class ThreadChecker implements Runnable{
 
     public void printData(File file1) {
 
-        reentrantLock.lock();
-        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,false))){
+        /*reentrantLock.lock();
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file,true))){
             os.writeObject(file1);
             os.flush();
         } catch (FileNotFoundException e) {
@@ -76,7 +77,7 @@ public class ThreadChecker implements Runnable{
         finally {
 
             reentrantLock.unlock();
-        }
+        }*/
 
 /*
         try (FileChannel channel1 = FileChannel.open(path, StandardOpenOption.APPEND)){

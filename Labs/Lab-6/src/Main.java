@@ -25,10 +25,10 @@ public class Main{
 
         }
 
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("Output.txt"))) {
-            File[] ob = (File[]) in.readObject();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("Output.dat"))) {
+            ThreadChecker[] ob = (ThreadChecker[]) in.readObject();
             //System.out.println(ob);
-            for (File e : ob) {
+            for (ThreadChecker e : ob) {
                 System.out.println(e);
 
             }
