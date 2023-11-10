@@ -7,19 +7,15 @@ public class MyThread implements Runnable {
     private Socket incoming;
     public MyThread(Socket incoming){
         this.incoming = incoming;
-
-
     }
-
     @Override
     public void run() {
         try (
                 InputStream in = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream();
                 Scanner sc = new Scanner(in);
-
-
-                var out = new PrintWriter(outStream,true, StandardCharsets.UTF_8))
+                var out = new PrintWriter(outStream,true, StandardCharsets.UTF_8)
+            )
         {
             out.println("Enter your name:");
             String name = sc.nextLine();
