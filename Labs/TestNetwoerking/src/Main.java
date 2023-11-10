@@ -14,7 +14,25 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        try(var s = new ServerSocket(8189) ;
+            Socket incoming = s.accept();
+            InputStream inStream  = incoming.getInputStream();
+            OutputStream outStream = incoming.getOutputStream();
+            var in = new Scanner(inStream, StandardCharsets.UTF_8);
+            var out = new PrintWriter(outStream, true,StandardCharsets.UTF_8);
+        ){
+            out.println("hello! Enter Bye to exit");
+            var done = false;
+            while (!done){
+                String line = in.nextLine();
+                out.println("Echo: " +line);
+                if (line.trim().equals("BYE"))
+                    done = true;
 
+            }
+        }catch (IOException e){
+            System.out.println("Exception: "+e);
+        }
 
     }
 }
