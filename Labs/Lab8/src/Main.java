@@ -1,10 +1,11 @@
 
-import sun.net.www.http.HttpClient;
+
 
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
+import java.net.http.HttpClient;
 
 public class Main {
     private static final String API_KEY = "5X39CIOXBFE50FP5";
@@ -15,7 +16,7 @@ public class Main {
 
         boolean done = true;
         Scanner input = new Scanner(System.in);
-        int value = 0;
+        int value;
         System.out.println("Welcome to the stock market Software");
         do {
             System.out.print("Enter the stock symbol(Name): ");
@@ -45,11 +46,6 @@ public class Main {
             }else {
                 System.out.println("This was not a number in the menu ");
             }
-
-
-
-
-
         }while (done);
 
 
@@ -64,6 +60,7 @@ public class Main {
 
         url += "&apikey=" + API_KEY;
 
+
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 
         try {
@@ -76,6 +73,7 @@ public class Main {
     }
     public static void getRealTimeData(String stockName){
         String data = fetchData(stockName,"TIME_SERIES_INTRADAY","5min");
+
         System.out.println(data);
     }
     public static void getWeeklyData(String stockName){
