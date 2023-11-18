@@ -1,7 +1,85 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import com.sun.deploy.net.HttpRequest;
+import com.sun.deploy.net.HttpResponse;
+import sun.net.www.http.HttpClient;
+
+import java.net.URI;
+import java.util.Scanner;
+
 public class Main {
+    private static final String API_KEY = "5X39CIOXBFE50FP5";
+    private static final String SIMPLE_URL = "https://www.alphavantage.co/query";
     public static void main(String[] args) {
+        HttpClient cc = HttpClient.newHttpClient();
+
+        boolean done = true;
+        Scanner input = new Scanner(System.in);
+        int value = 0;
+        System.out.println("Welcome to the stock market Software");
+        do {
+            System.out.print("Enter the stock symbol(Name): ");
+            String stock = input.nextLine();
+            System.out.println();
+            if (stock.isEmpty()){
+                done = false;
+                break;
+            }
+            System.out.println("If you want the real-time prices Enter 1: ");
+            System.out.println("-------------------------------------");
+            System.out.println("If you want the weekly prices Enter 2:");
+            System.out.println("-------------------------------------");
+            System.out.println("If you want the monthly prices Enter 3:");
+            System.out.print("what is your chose ?");
+            value = input.nextInt();
+            System.out.println();
+            if (value == 1){
+                getRealTimeData(stock);
+            }
+            else if (value == 2){
+                getWeeklyData(stock);
+
+            }else if (value == 3){
+                getMonthlyData(stock);
+
+            }else {
+                System.out.println("This was not a number in the menu ");
+            }
+
+
+
+
+
+        }while (done);
+
+
+    }
+    public  static String fetchData(String stock, String function, String interval) {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = SIMPLE_URL + "?function=" + function + "&symbol=" + stock;
+
+        if (!interval.isEmpty()) {
+            url += "&interval=" + interval;
+        }
+
+        url += "&apikey=" + API_KEY;
+
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void getRealTimeData(String StockName){
+
+    }
+    public static void getWeeklyData(String StockName){
+
+    }
+    public static void getMonthlyData(String StockName){
+        String data = fe
 
     }
 }
