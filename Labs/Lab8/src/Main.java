@@ -1,15 +1,17 @@
-import com.sun.deploy.net.HttpRequest;
-import com.sun.deploy.net.HttpResponse;
+
 import sun.net.www.http.HttpClient;
 
 import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class Main {
     private static final String API_KEY = "5X39CIOXBFE50FP5";
     private static final String SIMPLE_URL = "https://www.alphavantage.co/query";
     public static void main(String[] args) {
-        HttpClient cc = HttpClient.newHttpClient();
+
+
 
         boolean done = true;
         Scanner input = new Scanner(System.in);
@@ -72,14 +74,18 @@ public class Main {
             return null;
         }
     }
-    public static void getRealTimeData(String StockName){
-
+    public static void getRealTimeData(String stockName){
+        String data = fetchData(stockName,"TIME_SERIES_INTRADAY","5min");
+        System.out.println(data);
     }
-    public static void getWeeklyData(String StockName){
-
+    public static void getWeeklyData(String stockName){
+        String data = fetchData(stockName,"TIME_SERIES_WEEKLY","");
+        System.out.println(data);
     }
-    public static void getMonthlyData(String StockName){
-        String data = fe
+    public static void getMonthlyData(String stockName){
+        String data = fetchData(stockName,"TIME_SERIES_MONTHLY","");
+        System.out.println(data);
+
 
     }
 }
