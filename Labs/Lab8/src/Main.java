@@ -7,7 +7,7 @@ import java.net.http.HttpClient;
 
 
 public class Main {
-    private static final String API_KEY = "5X39CIOXBFE50FP5";
+    private static final String API_KEY = "1";
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);

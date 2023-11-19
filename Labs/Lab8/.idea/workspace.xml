@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36848ad1-d563-4568-9f6a-f821f459fcef" name="Changes" comment="Adding Lab8">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="36848ad1-d563-4568-9f6a-f821f459fcef" name="Changes" comment="Finished the lab">
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1700271539592</updated>
       <workItem from="1700271540622" duration="3272000" />
-      <workItem from="1700303501924" duration="10099000" />
+      <workItem from="1700303501924" duration="10393000" />
     </task>
     <task id="LOCAL-00001" summary="Adding Lab8">
       <option name="closed" value="true" />
@@ -105,7 +104,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700306497259</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Finished the lab">
+      <option name="closed" value="true" />
+      <created>1700354241729</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1700354241735</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Finished the lab">
+      <option name="closed" value="true" />
+      <created>1700354324601</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700354324601</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +128,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding Lab8" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding Lab8" />
+    <MESSAGE value="Finished the lab" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished the lab" />
   </component>
 </project>
