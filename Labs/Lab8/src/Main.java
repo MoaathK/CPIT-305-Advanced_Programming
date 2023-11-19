@@ -1,88 +1,114 @@
 
 
 
+import netscape.javascript.JSObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
 import java.net.http.HttpClient;
 
+
 public class Main {
     private static final String API_KEY = "5X39CIOXBFE50FP5";
-    private static final String SIMPLE_URL = "https://www.alphavantage.co/query";
+
     public static void main(String[] args) {
-
-
-
-        boolean done = true;
         Scanner input = new Scanner(System.in);
-        int value;
+
         System.out.println("Welcome to the stock market Software");
-        do {
+
+
             System.out.print("Enter the stock symbol(Name): ");
             String stock = input.nextLine();
-            System.out.println();
-            if (stock.isEmpty()){
-                done = false;
-                break;
-            }
-            System.out.println("If you want the real-time prices Enter 1: ");
+
+
+            System.out.println("\nIf you want the real-time prices Enter 1: ");
             System.out.println("-------------------------------------");
             System.out.println("If you want the weekly prices Enter 2:");
             System.out.println("-------------------------------------");
             System.out.println("If you want the monthly prices Enter 3:");
+            System.out.println("-------------------------------------");
+            System.out.println("Type 7 to exit: ");
             System.out.print("what is your chose ?");
-            value = input.nextInt();
+            int value = input.nextInt();
             System.out.println();
             if (value == 1){
                 getRealTimeData(stock);
             }
             else if (value == 2){
-                getWeeklyData(stock);
+                getWeekData(stock);
 
             }else if (value == 3){
                 getMonthlyData(stock);
 
-            }else {
+            }
+            else {
                 System.out.println("This was not a number in the menu ");
             }
-        }while (done);
 
 
-    }
-    public  static String fetchData(String stock, String function, String interval) {
-        HttpClient client = HttpClient.newHttpClient();
-        String url = SIMPLE_URL + "?function=" + function + "&symbol=" + stock;
 
-        if (!interval.isEmpty()) {
-            url += "&interval=" + interval;
         }
 
-        url += "&apikey=" + API_KEY;
 
 
+
+    public static void getRealTimeData(String stock){
+        String url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="+stock+"&interval=5min&apikey="+API_KEY+"&datatype=csv";
+        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
-        } catch (Exception e) {
+            HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
+
+            String[] lines = response.body().split("\n");
+            if (lines.length > 1) {
+
+                String[] latestData = lines[1].split(",");
+                String lastUpdatedPrice = latestData[3];
+                System.out.println("Last Updated Price: " + lastUpdatedPrice);
+            } else {
+                System.out.println("No data available");
+            }
+        }catch (IOException | InterruptedException e){
             e.printStackTrace();
-            return null;
         }
     }
-    public static void getRealTimeData(String stockName){
-        String data = fetchData(stockName,"TIME_SERIES_INTRADAY","5min");
+    public static void printTheData(String stock,int numOfDays,String type){
 
-        System.out.println(data);
-    }
-    public static void getWeeklyData(String stockName){
-        String data = fetchData(stockName,"TIME_SERIES_WEEKLY","");
-        System.out.println(data);
+
+        String url = "https://www.alphavantage.co/query?function="+type+"&symbol="+stock+"&interval=5min&apikey="+API_KEY+"&datatype=csv";
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            String[] lines = response.body().split("\n");
+            int daysToPrint = Math.min(lines.length - 1, numOfDays); // 5 days + 1 header row
+            for (int i = 1; i < daysToPrint; i++) {
+                String[] data = lines[i].split(",");
+                String date = data[0];
+                String closingPrice = data[4]; // Adjust the index if necessary
+                System.out.println("Date: " + date + ", Closing Price: " + closingPrice);
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     public static void getMonthlyData(String stockName){
-        String data = fetchData(stockName,"TIME_SERIES_MONTHLY","");
-        System.out.println(data);
+        printTheData(stockName,31,"TIME_SERIES_MONTHLY");
+
+
+    }
+    public static void getWeekData(String stockName){
+        printTheData(stockName,6,"TIME_SERIES_WEEKLY");
 
 
     }
