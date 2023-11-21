@@ -7,18 +7,15 @@ import java.net.http.HttpClient;
 
 
 public class Main {
-    private static final String API_KEY = "1";
+    private static final String API_KEY = "5X39CIOXBFE50FP5";
 
     public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
 
         System.out.println("Welcome to the stock market Software");
-
-
             System.out.print("Enter the stock symbol(Name): ");
             String stock = input.nextLine();
-
-
             System.out.println("\nIf you want the real-time prices Enter 1: ");
             System.out.println("-------------------------------------");
             System.out.println("If you want the weekly prices Enter 2:");
@@ -37,7 +34,6 @@ public class Main {
 
             }else if (value == 3){
                 getMonthlyData(stock);
-
             }
             else {
                 System.out.println("This was not a number in the menu ");
@@ -80,11 +76,11 @@ public class Main {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String[] lines = response.body().split("\n");
-            int daysToPrint = Math.min(lines.length - 1, numOfDays); // 5 days + 1 header row
+            int daysToPrint = Math.min(lines.length - 1, numOfDays);
             for (int i = 1; i < daysToPrint; i++) {
                 String[] data = lines[i].split(",");
                 String date = data[0];
-                String closingPrice = data[4]; // Adjust the index if necessary
+                String closingPrice = data[4];
                 System.out.println("Date: " + date + ", Closing Price: " + closingPrice);
             }
 

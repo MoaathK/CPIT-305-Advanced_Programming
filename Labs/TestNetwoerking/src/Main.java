@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -14,7 +16,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        try(var s = new ServerSocket(8189) ;
+
+
+        /*System.out.println(list.get(0));
+        System.out.println(list.get(1));
+
+        List<Integer> list1 = new ArrayList<Integer>();
+        list1.add(10);
+        list1.add("10");*/
+
+    }
+}
+/*
+  try(var s = new ServerSocket(8189) ;
             Socket incoming = s.accept();
             InputStream inStream  = incoming.getInputStream();
             OutputStream outStream = incoming.getOutputStream();
@@ -33,9 +47,7 @@ public class Main {
         }catch (IOException e){
             System.out.println("Exception: "+e);
         }
-
-    }
-}
+ */
 
 /*
     try (var s = new Socket("time-a.nist.gov",13);
